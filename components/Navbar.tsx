@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const links = [
+  { href: "/999-website-plan", label: "₹999 Plan", highlight: true },
   { href: "#services", label: "Services" },
   { href: "#pricing", label: "Pricing" },
   { href: "#process", label: "How it works" },
@@ -53,7 +54,11 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
-              className="rounded-full px-3.5 py-2 text-[14px] font-medium text-ink/75 hover:text-ink hover:bg-bg transition-colors"
+              className={
+                l.highlight
+                  ? "rounded-full px-3.5 py-2 text-[14px] font-semibold text-accent hover:bg-accent-soft transition-colors"
+                  : "rounded-full px-3.5 py-2 text-[14px] font-medium text-ink/75 hover:text-ink hover:bg-bg transition-colors"
+              }
             >
               {l.label}
             </a>
@@ -100,7 +105,11 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-[15px] text-ink/85 hover:bg-bg"
+                className={
+                  l.highlight
+                    ? "rounded-lg px-3 py-2.5 text-[15px] font-semibold text-accent hover:bg-accent-soft"
+                    : "rounded-lg px-3 py-2.5 text-[15px] text-ink/85 hover:bg-bg"
+                }
               >
                 {l.label}
               </a>

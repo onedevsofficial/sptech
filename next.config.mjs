@@ -40,6 +40,15 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    // Short, ad-friendly aliases that all funnel to the ₹999 LP.
+    return [
+      { source: "/999", destination: "/999-website-plan", permanent: true },
+      { source: "/999-monthly", destination: "/999-website-plan", permanent: true },
+      { source: "/999-plan", destination: "/999-website-plan", permanent: true },
+      { source: "/website-999", destination: "/999-website-plan", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

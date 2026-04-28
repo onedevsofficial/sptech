@@ -3,15 +3,15 @@ const services = [
     tag: "₹999/month",
     title: "Website Design & Development",
     body:
-      "A custom-designed business website built for conversions — not a template with your logo slapped on. Hosting, SSL, edits and SEO basics included.",
+      "A custom-designed business website built for conversions — not a template with your logo slapped on. Free domain, free hosting, unlimited pages and 24×7 support included.",
     points: [
-      "Bespoke design tailored to your brand",
-      "Mobile-first, fast-loading pages",
-      "Hosting, SSL & domain setup handled",
-      "Unlimited monthly minor edits",
+      "Unlimited pages, fully bespoke design",
+      "Free domain (1st year) + free hosting",
+      "Mobile-first, speed-tuned for Google",
+      "24×7 WhatsApp support, same-day edits",
     ],
-    cta: "See pricing",
-    href: "#pricing",
+    cta: "View ₹999 plan details",
+    href: "/999-website-plan",
     iconPath:
       "M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm0 14h18M9 17v4M15 17v4",
   },

@@ -5,7 +5,7 @@ import { useState } from "react";
 const faqs = [
   {
     q: "What's actually included in the ₹999/month plan?",
-    a: "A custom-designed 5-page website, hosting, SSL certificate, domain setup, basic SEO, mobile responsiveness, contact form, WhatsApp button, Google Analytics, plus 2 minor edits every month. There is no setup fee.",
+    a: "Unlimited pages with custom design, free domain for the first year, free managed hosting + SSL, mobile-responsive build, WhatsApp + contact form, basic on-page SEO, Google Analytics, 24×7 support, and same-day edits. No setup fee, no surprise charges. See full breakdown on the ₹999 plan page.",
   },
   {
     q: "Is there a contract or lock-in period?",

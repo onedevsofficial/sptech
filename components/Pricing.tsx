@@ -1,12 +1,12 @@
 const starter = [
-  "Up to 5 fully designed pages",
+  "Unlimited pages — no caps, ever",
+  "Custom design (no templates)",
+  "Free domain for the first year",
+  "Free managed hosting + SSL",
   "Mobile-first responsive design",
-  "Hosting, SSL & domain assistance",
   "WhatsApp + contact form integration",
-  "Basic on-page SEO setup",
-  "Google Analytics & Search Console",
-  "2 minor edits every month",
-  "Email & WhatsApp support (10am–8pm)",
+  "Basic on-page SEO + Google Analytics",
+  "Same-day edits, 24×7 support",
 ];
 
 const business = [
@@ -68,11 +68,11 @@ export default function Pricing() {
               ))}
             </ul>
 
-            <a href="#contact" className="btn-primary mt-8 w-full">
-              Start at ₹999/month
+            <a href="/999-website-plan" className="btn-primary mt-8 w-full">
+              View full ₹999 plan details
             </a>
             <p className="mt-3 text-center text-[12px] text-muted">
-              No credit card needed for the audit
+              Free domain · free hosting · cancel anytime
             </p>
           </div>
 
