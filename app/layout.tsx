@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
+import Clarity from "@/components/Clarity";
 import "./globals.css";
 
 const sans = Inter({
@@ -147,6 +148,7 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body>
         {children}
+        <Clarity />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
