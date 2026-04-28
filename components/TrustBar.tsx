@@ -1,7 +1,7 @@
 const stats = [
   { kpi: "200+", label: "Businesses served" },
   { kpi: "4.9★", label: "Avg. client rating" },
-  { kpi: "7 days", label: "Avg. launch time" },
+  { kpi: "3 days", label: "Avg. launch time" },
   { kpi: "24 hrs", label: "Edit turnaround" },
 ];
 

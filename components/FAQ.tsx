@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "Is there a contract or lock-in period?",
-    a: "No. You pay month to month. Stop any time with 7 days' notice — we'll hand over your content and design files. We earn your renewal; we don't trap you in a contract.",
+    a: "No. You pay month to month. Stop any time with 3 days' notice — we'll hand over your content and design files. We earn your renewal; we don't trap you in a contract.",
   },
   {
     q: "How long does it take to launch a website?",
@@ -87,18 +87,29 @@ export default function FAQ() {
                     </span>
                     <span
                       className={`mt-1 shrink-0 grid place-items-center h-7 w-7 rounded-full border border-line transition-transform ${
-                        isOpen ? "rotate-45 bg-ink text-white border-ink" : "text-ink"
+                        isOpen
+                          ? "rotate-45 bg-ink text-white border-ink"
+                          : "text-ink"
                       }`}
                       aria-hidden
                     >
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.4"
+                      >
                         <path d="M12 5v14M5 12h14" strokeLinecap="round" />
                       </svg>
                     </span>
                   </button>
                   <div
                     className={`grid transition-all duration-300 ease-out ${
-                      isOpen ? "grid-rows-[1fr] opacity-100 mt-3" : "grid-rows-[0fr] opacity-0"
+                      isOpen
+                        ? "grid-rows-[1fr] opacity-100 mt-3"
+                        : "grid-rows-[0fr] opacity-0"
                     }`}
                   >
                     <div className="overflow-hidden">

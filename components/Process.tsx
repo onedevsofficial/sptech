@@ -11,7 +11,7 @@ const steps = [
   },
   {
     n: "03",
-    t: "Built & launched in 5–7 days",
+    t: "Built & launched in 1–3 days",
     d: "We code, test, hook up domain & hosting, and launch your site. Speed, security and SEO basics are dialled in before go-live.",
   },
   {
@@ -23,7 +23,10 @@ const steps = [
 
 export default function Process() {
   return (
-    <section id="process" className="section bg-brand text-white relative overflow-hidden">
+    <section
+      id="process"
+      className="section bg-brand text-white relative overflow-hidden"
+    >
       <div
         className="absolute inset-0 opacity-[0.07]"
         style={{
@@ -58,8 +61,20 @@ export default function Process() {
                   {s.n}
                 </span>
                 {i < steps.length - 1 && (
-                  <svg className="hidden lg:block opacity-40" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.6">
-                    <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg
+                    className="hidden lg:block opacity-40"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="1.6"
+                  >
+                    <path
+                      d="M5 12h14M13 6l6 6-6 6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 )}
               </div>
@@ -75,7 +90,10 @@ export default function Process() {
           <a href="#contact" className="btn-primary">
             Start with a free audit
           </a>
-          <a href="#pricing" className="btn bg-white/10 text-white hover:bg-white/15 px-6 py-3.5 text-[15px] border border-white/15">
+          <a
+            href="#pricing"
+            className="btn bg-white/10 text-white hover:bg-white/15 px-6 py-3.5 text-[15px] border border-white/15"
+          >
             Compare plans
           </a>
         </div>

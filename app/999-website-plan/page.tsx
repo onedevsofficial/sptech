@@ -65,7 +65,7 @@ export default function Lp999Page() {
         <Lp999Includes />
         <Lp999Compare />
         <Lp999InlineCTA
-          headline="Spots filling for April. Lock yours in 30 seconds."
+          headline="Spots filling for May. Lock yours in 30 seconds."
           sub="Free 15-min discovery call · WhatsApp reply within minutes."
         />
         <Lp999Process />
@@ -333,7 +333,7 @@ function Lp999TrustStrip() {
   const stats = [
     { kpi: "200+", label: "Businesses live with SPTech" },
     { kpi: "4.9★", label: "Avg. rating across reviews" },
-    { kpi: "7 days", label: "Avg. time to launch" },
+    { kpi: "3 days", label: "Avg. time to launch" },
     { kpi: "24×7", label: "Support, every day of the year" },
   ];
   return (
@@ -493,7 +493,7 @@ function Lp999Compare() {
         { label: "Free domain", state: "good", value: "Always free" },
         { label: "Free hosting", state: "good", value: "Free, managed" },
         { label: "24×7 support", state: "good", value: "WhatsApp anytime" },
-        { label: "Time to launch", state: "good", value: "7 days" },
+        { label: "Time to launch", state: "good", value: "3 days" },
         { label: "Lock-in", state: "good", value: "None — cancel anytime" },
       ],
     },
@@ -501,7 +501,7 @@ function Lp999Compare() {
       name: "Doing it yourself",
       sub: "Wix · WordPress · builders",
       setup: "₹0",
-      monthly: "₹500 – ₹1,500",
+      monthly: "₹1,500 – ₹3,500",
       monthlyNote: "tool fees, plugins, hosting",
       orderClass: "order-2 md:order-1",
       rows: [
@@ -817,7 +817,7 @@ function Lp999Process() {
     },
     {
       n: "03",
-      t: "Built & launched in 7 days",
+      t: "Built & launched in 3 days",
       d: "Domain, hosting, SSL, SEO basics, content, contact form — all set up. We handle every technical step.",
     },
     {
