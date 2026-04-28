@@ -68,8 +68,20 @@ export default function Lp999Form() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.error || "Something went wrong. Try again.");
+      const text = await res.text();
+      let data: { error?: string; message?: string; ok?: boolean } = {};
+      try {
+        data = JSON.parse(text);
+      } catch {
+        /* response wasn't JSON */
+      }
+      if (!res.ok) {
+        const msg =
+          data?.error ||
+          data?.message ||
+          (text && text.length < 200 ? text : `Submission failed (HTTP ${res.status}).`);
+        throw new Error(msg);
+      }
       setStatus("success");
       trackLead(999);
       form.reset();
