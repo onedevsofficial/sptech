@@ -56,6 +56,41 @@ function buildEmail(payload: ContactPayload) {
   return { subject, text, html };
 }
 
+async function sendViaWeb3Forms(payload: ContactPayload) {
+  const accessKey = process.env.WEB3FORMS_KEY!;
+  const subjectTag = payload.service ? `[${payload.service}]` : "[New enquiry]";
+  const subject = `${subjectTag} ${payload.name} — sptechweb.site`;
+
+  const res = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      access_key: accessKey,
+      subject,
+      from_name: "SPTech Website",
+      replyto: payload.email,
+      // Visible fields in the email body
+      Name: payload.name,
+      Email: payload.email,
+      Phone: payload.phone,
+      Service: payload.service || "-",
+      Budget: payload.budget || "-",
+      Message: payload.message || "(none)",
+      // Web3Forms's own honeypot — keep blank
+      botcheck: "",
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Web3Forms ${res.status}: ${body.slice(0, 300)}`);
+  }
+  return { delivered: true as const, via: "web3forms" as const };
+}
+
 async function sendViaResend(payload: ContactPayload) {
   const apiKey = process.env.RESEND_API_KEY!;
   const to = (process.env.CONTACT_TO || "info@sptechweb.site")
@@ -111,12 +146,17 @@ async function sendViaSmtp(payload: ContactPayload) {
 }
 
 export async function sendContactEmail(payload: ContactPayload) {
-  // Preferred: Resend (single env var, plays nicely with Vercel)
+  // 1. Easiest path: Web3Forms — no DNS, just a single access key.
+  if (process.env.WEB3FORMS_KEY) {
+    return sendViaWeb3Forms(payload);
+  }
+
+  // 2. Cleaner path on Vercel once you've verified your domain: Resend.
   if (process.env.RESEND_API_KEY) {
     return sendViaResend(payload);
   }
 
-  // Fallback: SMTP via nodemailer
+  // 3. Fallback: SMTP via nodemailer.
   if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
     return sendViaSmtp(payload);
   }
