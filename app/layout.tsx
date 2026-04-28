@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
 import Clarity from "@/components/Clarity";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import MetaPixel from "@/components/MetaPixel";
 import "./globals.css";
 
@@ -149,6 +150,7 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body>
         {children}
+        <GoogleAnalytics />
         <MetaPixel />
         <Clarity />
         <script
