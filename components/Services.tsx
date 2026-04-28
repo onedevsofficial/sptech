@@ -2,11 +2,10 @@ const services = [
   {
     tag: "₹999/month",
     title: "Website Design & Development",
-    body:
-      "A custom-designed business website built for conversions — not a template with your logo slapped on. Free domain, free hosting, unlimited pages and 24×7 support included.",
+    body: "A custom-designed business website built for conversions — not a template with your logo slapped on. Free domain, free hosting, unlimited pages and 24×7 support included.",
     points: [
       "Unlimited pages, fully bespoke design",
-      "Free domain (1st year) + free hosting",
+      "Free domain + free hosting",
       "Mobile-first, speed-tuned for Google",
       "24×7 WhatsApp support, same-day edits",
     ],
@@ -18,8 +17,7 @@ const services = [
   {
     tag: "Custom quote",
     title: "Mobile App Development",
-    body:
-      "Native-feel apps for iOS and Android — clean UX, secure backend, Play Store / App Store launch handled. We scope to your project size, no bloated retainers.",
+    body: "Native-feel apps for iOS and Android — clean UX, secure backend, Play Store / App Store launch handled. We scope to your project size, no bloated retainers.",
     points: [
       "iOS + Android from a single codebase",
       "Secure backend & admin panel",
@@ -34,8 +32,7 @@ const services = [
   {
     tag: "Free for everyone",
     title: "Website Audit Report",
-    body:
-      "A genuine human-led review of your existing site — speed, SEO, design and conversion gaps — with a clear plan you can act on (with us, or without).",
+    body: "A genuine human-led review of your existing site — speed, SEO, design and conversion gaps — with a clear plan you can act on (with us, or without).",
     points: [
       "PageSpeed & Core Web Vitals",
       "On-page SEO + keyword gap check",
@@ -73,7 +70,16 @@ export default function Services() {
             >
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-brand text-white grid place-items-center">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d={s.iconPath} />
                   </svg>
                 </div>
@@ -92,8 +98,20 @@ export default function Services() {
               <ul className="mt-5 space-y-2.5">
                 {s.points.map((p) => (
                   <li key={p} className="flex items-start gap-2.5 text-[14px]">
-                    <svg className="mt-1 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.6">
-                      <path d="m5 12 5 5 9-11" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg
+                      className="mt-1 shrink-0"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#16a34a"
+                      strokeWidth="2.6"
+                    >
+                      <path
+                        d="m5 12 5 5 9-11"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                     <span className="text-ink/85">{p}</span>
                   </li>
@@ -105,8 +123,19 @@ export default function Services() {
                 className="mt-7 inline-flex items-center gap-1.5 text-[14.5px] font-semibold text-ink group-hover:text-accent transition-colors"
               >
                 {s.cta}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                >
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </a>
             </article>
