@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: theme(colors.bg);
+    color: theme(colors.ink.DEFAULT);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    background: theme(colors.brand.DEFAULT);
+    color: white;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-medium
+           transition-all duration-200 active:translate-y-px focus-visible:outline-none
+           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-white px-6 py-3.5 text-[15px] shadow-cta
+           hover:bg-accent-hover focus-visible:ring-accent;
+  }
+
+  .btn-secondary {
+    @apply btn bg-ink text-white px-6 py-3.5 text-[15px]
+           hover:bg-ink-soft focus-visible:ring-ink;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-ink px-5 py-3 text-[15px]
+           border border-line hover:border-ink/40 hover:bg-white
+           focus-visible:ring-ink/30;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-line bg-white/60
+           px-3.5 py-1.5 text-xs font-medium tracking-wide text-muted backdrop-blur;
+  }
+
+  .section {
+    @apply py-20 md:py-28;
+  }
+
+  .eyebrow {
+    @apply text-[12px] font-semibold uppercase tracking-[0.18em] text-accent;
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-white shadow-card;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(10,26,74,0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10,26,74,0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at top, black 35%, transparent 75%);
+  }
+
+  .noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+  }
+
+  input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] text-ink
+           placeholder:text-muted/70 focus:outline-none focus:ring-2
+           focus:ring-brand/20 focus:border-brand/40;
+  }
+
+  textarea {
+    @apply min-h-[120px] resize-y;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
