@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { trackLead } from "@/components/MetaPixel";
 
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+  "214b6fc4-44d0-481f-9e10-7b115b83063e";
+
 type Captcha = { question: string; token: string };
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -41,52 +45,84 @@ export default function Lp999Form() {
     setErrorMsg("");
 
     const fd = new FormData(form);
-    const businessLine = [
-      fd.get("business") ? `Business: ${fd.get("business")}` : "",
-      fd.get("city") ? `City: ${fd.get("city")}` : "",
-    ]
-      .filter(Boolean)
-      .join(" · ");
+    const name = String(fd.get("name") || "").trim();
 
-    const payload = {
-      name: String(fd.get("name") || "").trim(),
-      email: String(fd.get("email") || "").trim(),
-      phone: String(fd.get("phone") || "").trim(),
-      service: "website-999 (LP)",
-      budget: "999",
-      message: businessLine || "Enquiry from ₹999 plan landing page.",
-      website: String(fd.get("website") || ""),
-      captchaAnswer: String(fd.get("captchaAnswer") || "").trim(),
-      captchaToken: captcha.token,
-      elapsedMs: Date.now() - startedAt,
-      consent: fd.get("consent") === "on",
-    };
-
+    // ── Step 1: server-side validation (math captcha + honeypot + rate limit)
     try {
-      const res = await fetch("/api/contact", {
+      const validateRes = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          name,
+          email: String(fd.get("email") || "").trim(),
+          phone: String(fd.get("phone") || "").trim(),
+          service: "website-999 (LP)",
+          budget: "999",
+          message: [
+            fd.get("business") ? `Business: ${fd.get("business")}` : "",
+            fd.get("city") ? `City: ${fd.get("city")}` : "",
+          ]
+            .filter(Boolean)
+            .join(" · ") || "Enquiry from ₹999 plan landing page.",
+          website: String(fd.get("website") || ""),
+          captchaAnswer: String(fd.get("captchaAnswer") || "").trim(),
+          captchaToken: captcha.token,
+          elapsedMs: Date.now() - startedAt,
+          consent: fd.get("consent") === "on",
+        }),
       });
-      const text = await res.text();
-      let data: { error?: string; message?: string; ok?: boolean } = {};
+      const text = await validateRes.text();
+      let data: { error?: string; message?: string } = {};
       try {
         data = JSON.parse(text);
       } catch {
-        /* response wasn't JSON */
+        /* not JSON */
       }
-      if (!res.ok) {
+      if (!validateRes.ok) {
         const msg =
           data?.error ||
           data?.message ||
-          (text && text.length < 200 ? text : `Submission failed (HTTP ${res.status}).`);
+          (text && text.length < 200
+            ? text
+            : `Validation failed (HTTP ${validateRes.status}).`);
         throw new Error(msg);
       }
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Could not validate.");
+      loadCaptcha();
+      return;
+    }
+
+    // ── Step 2: browser submits to Web3Forms (passes Cloudflare cleanly)
+    try {
+      // Strip captcha-related fields from the FormData before forwarding.
+      fd.delete("captchaAnswer");
+      fd.delete("website");
+      fd.append("access_key", WEB3FORMS_KEY);
+      fd.append("subject", `[LP-999] ${name || "Lead"} — sptechweb.site`);
+      fd.append("from_name", "SPTech ₹999 Plan LP");
+      fd.append("source", "999-website-plan landing page");
+      fd.append("replyto", String(fd.get("email") || ""));
+      fd.append("botcheck", "");
+
+      const w3 = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: fd,
+      });
+      const w3Data = await w3.json().catch(() => ({}));
+      if (!w3Data?.success) {
+        throw new Error(
+          w3Data?.message ||
+            "We couldn't deliver the email. Please WhatsApp us at +91 70033 91355."
+        );
+      }
+
       setStatus("success");
       trackLead(999);
       form.reset();
       loadCaptcha();
-    } catch (err: unknown) {
+    } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Could not send.");
       loadCaptcha();

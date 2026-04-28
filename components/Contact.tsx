@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react";
 
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+  "214b6fc4-44d0-481f-9e10-7b115b83063e";
+
 type Captcha = { question: string; token: string };
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -40,44 +44,76 @@ export default function Contact() {
     setErrorMsg("");
 
     const fd = new FormData(form);
-    const payload = {
-      name: String(fd.get("name") || "").trim(),
-      email: String(fd.get("email") || "").trim(),
-      phone: String(fd.get("phone") || "").trim(),
-      service: String(fd.get("service") || "").trim(),
-      budget: String(fd.get("budget") || "").trim(),
-      message: String(fd.get("message") || "").trim(),
-      website: String(fd.get("website") || ""),
-      captchaAnswer: String(fd.get("captchaAnswer") || "").trim(),
-      captchaToken: captcha.token,
-      elapsedMs: Date.now() - startedAt,
-      consent: fd.get("consent") === "on",
-    };
+    const name = String(fd.get("name") || "").trim();
 
+    // ── Step 1: server-side validation (math captcha + honeypot + rate limit)
     try {
-      const res = await fetch("/api/contact", {
+      const validateRes = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          name,
+          email: String(fd.get("email") || "").trim(),
+          phone: String(fd.get("phone") || "").trim(),
+          service: String(fd.get("service") || "").trim(),
+          budget: String(fd.get("budget") || "").trim(),
+          message: String(fd.get("message") || "").trim(),
+          website: String(fd.get("website") || ""),
+          captchaAnswer: String(fd.get("captchaAnswer") || "").trim(),
+          captchaToken: captcha.token,
+          elapsedMs: Date.now() - startedAt,
+          consent: fd.get("consent") === "on",
+        }),
       });
-      const text = await res.text();
-      let data: { error?: string; message?: string; ok?: boolean } = {};
+      const text = await validateRes.text();
+      let data: { error?: string; message?: string } = {};
       try {
         data = JSON.parse(text);
       } catch {
-        /* response wasn't JSON */
+        /* not JSON */
       }
-      if (!res.ok) {
+      if (!validateRes.ok) {
         const msg =
           data?.error ||
           data?.message ||
-          (text && text.length < 200 ? text : `Submission failed (HTTP ${res.status}).`);
+          (text && text.length < 200
+            ? text
+            : `Validation failed (HTTP ${validateRes.status}).`);
         throw new Error(msg);
       }
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Could not validate.");
+      loadCaptcha();
+      return;
+    }
+
+    // ── Step 2: browser submits to Web3Forms (passes Cloudflare cleanly)
+    try {
+      fd.delete("captchaAnswer");
+      fd.delete("website");
+      fd.append("access_key", WEB3FORMS_KEY);
+      fd.append("subject", `[Enquiry] ${name || "Website"} — sptechweb.site`);
+      fd.append("from_name", "SPTech Website");
+      fd.append("replyto", String(fd.get("email") || ""));
+      fd.append("botcheck", "");
+
+      const w3 = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: fd,
+      });
+      const w3Data = await w3.json().catch(() => ({}));
+      if (!w3Data?.success) {
+        throw new Error(
+          w3Data?.message ||
+            "We couldn't deliver the email. Please WhatsApp us at +91 70033 91355."
+        );
+      }
+
       setStatus("success");
       form.reset();
       loadCaptcha();
-    } catch (err: unknown) {
+    } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Could not send.");
       loadCaptcha();

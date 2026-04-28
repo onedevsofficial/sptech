@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { verifyCaptcha } from "@/lib/captcha";
 import { rateLimit } from "@/lib/rateLimit";
-import { sendContactEmail } from "@/lib/mailer";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -83,22 +82,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  try {
-    await sendContactEmail({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      service: data.service,
-      budget: data.budget,
-      message: data.message,
-    });
-  } catch (err) {
-    console.error("[contact] mail error:", err);
-    return NextResponse.json(
-      { error: "We couldn't send your message right now. Please WhatsApp us at +91 70033 91355." },
-      { status: 502 }
-    );
-  }
-
+  // Validation passed — the browser will now POST the form to Web3Forms.
+  // (Submitting from the server hits Cloudflare's JS challenge and times
+  // out the Vercel function; the browser submission goes straight through.)
   return NextResponse.json({ ok: true });
 }
