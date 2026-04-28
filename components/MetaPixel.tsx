@@ -6,8 +6,11 @@ declare global {
   }
 }
 
+// Meta (Facebook/Instagram) Pixel. Defaults to the production pixel so it
+// just works after deploy; override via NEXT_PUBLIC_META_PIXEL_ID for
+// staging or a different ad account.
 export default function MetaPixel() {
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || "324995140034064";
   if (!pixelId) return null;
 
   return (

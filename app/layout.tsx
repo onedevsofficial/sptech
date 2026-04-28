@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
 import Clarity from "@/components/Clarity";
+import MetaPixel from "@/components/MetaPixel";
 import "./globals.css";
 
 const sans = Inter({
@@ -148,6 +149,7 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body>
         {children}
+        <MetaPixel />
         <Clarity />
         <script
           type="application/ld+json"

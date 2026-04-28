@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Lp999Form from "@/components/lp999/Lp999Form";
-import MetaPixel from "@/components/MetaPixel";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sptechweb.site";
 
@@ -57,7 +56,6 @@ export const viewport: Viewport = {
 export default function Lp999Page() {
   return (
     <>
-      <MetaPixel />
       <Lp999Header />
       <main>
         <Lp999Hero />
